@@ -149,8 +149,11 @@ static NSMutableArray *DYNAMIC_SUBCLASSES;
 
 #pragma mark - Dynamic subclassing initializer and property
 
-+ (void)load
++ (void)initialize
 {
+    if (self != UIView.class)
+        return;
+    
     @autoreleasepool
     {
 #ifdef PX_LOGGING
@@ -387,17 +390,28 @@ static NSMutableArray *DYNAMIC_SUBCLASSES;
 {
     // make sure we have a string - needed to filter bad input from IB
     aClass = [aClass description];
-
-    // trim leading and trailing whitespace
-    aClass = [aClass stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-
-    objc_setAssociatedObject(self, &STYLE_CLASS_KEY, aClass, OBJC_ASSOCIATION_COPY_NONATOMIC);
+	
+	// reduce white spaces and duplicates
+	NSMutableSet *mutSet = [NSMutableSet new];
+	[mutSet addObjectsFromArray:[aClass componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
+	[mutSet removeObject:@""];
 
     //Precalculate classes array for performance gain
-    NSArray *classes = [aClass componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSArray *classes = [mutSet allObjects];
     classes = [classes sortedArrayUsingComparator:^NSComparisonResult(NSString *class1, NSString *class2) {
         return [class1 compare:class2];
     }];
+	
+	aClass = [classes componentsJoinedByString:@" "];
+	
+	NSString *previousClass = objc_getAssociatedObject(self, &STYLE_CLASS_KEY);
+	if((!aClass && !previousClass) || [aClass isEqualToString:previousClass]){
+		// no change
+		return;
+	}
+	
+	objc_setAssociatedObject(self, &STYLE_CLASS_KEY, aClass, OBJC_ASSOCIATION_COPY_NONATOMIC);
+	
     objc_setAssociatedObject(self, &STYLE_CLASSES_KEY, classes, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
 	if ([aClass length])
@@ -568,6 +582,40 @@ static NSMutableArray *DYNAMIC_SUBCLASSES;
     id value = [properties objectForKey:key];
 
     return (value != nil) ? value : [super valueForUndefinedKey:key];
+}
+
+- (void)addStyleClass:(NSString *)styleClass
+{
+    if (self.styleClass){
+        self.styleClass = [NSString stringWithFormat:@"%@ %@", self.styleClass, [styleClass description]];
+    } else {
+        self.styleClass = [styleClass description];
+    }
+}
+
+- (void)removeStyleClass:(NSString *)styleClass
+{
+    styleClass = [styleClass description];
+    NSMutableSet *mutSet = [NSMutableSet new];
+	[mutSet addObjectsFromArray:[styleClass componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
+	[mutSet removeObject:@""];
+    NSArray *classesToRemove = [mutSet allObjects];
+	NSArray *currentClasses = objc_getAssociatedObject(self, &STYLE_CLASSES_KEY);
+    mutSet = [[NSMutableSet alloc] initWithArray:currentClasses];
+    for (NSString *classToRemove in classesToRemove){
+        [mutSet removeObject:classToRemove];
+    }
+    NSArray *classes = [mutSet allObjects];
+	self.styleClass = [classes componentsJoinedByString:@" "];
+}
+
+- (void)styleClassed:(NSString *)styleClass enabled:(bool)enabled
+{
+	if(enabled){
+		[self addStyleClass:styleClass];
+	}else{
+		[self removeStyleClass:styleClass];
+	}
 }
 
 @end

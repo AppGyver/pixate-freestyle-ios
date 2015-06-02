@@ -1,6 +1,6 @@
 # Pixate Freestyle
 
-Pixate Freestyle is a native iOS (and [Android](https://github.com/pixate/pixate-freestyle-android)) library that styles native controls with CSS. With Freestyle, you can replace many complicated lines of Objective-C with a few lines of CSS. This simplifies and centralizes your styling code, and [offers other benefits](http://www.pixate.com/) as well.
+Pixate Freestyle is a native iOS (and [Android](https://github.com/pixate/pixate-freestyle-android)) library that styles native controls with CSS. With Freestyle, you can replace many complicated lines of Objective-C with a few lines of CSS. This simplifies and centralizes your styling code, and [offers other benefits](http://www.freestyle.org/) as well.
 
 ## Getting Started
 
@@ -8,7 +8,7 @@ Pixate Freestyle is a native iOS (and [Android](https://github.com/pixate/pixate
 
 There are several ways to download and install the Pixate Freestyle framework.
 
-The easiest is to [download the installer](http://www.pixate.com/downloads/freestyle/PixateFreestyle-2.1.pkg), which always contains the latest  version, and drag **PixateFreestyle.framework** into your Xcode project. Alternatively, you can download the framework file only (i.e. no samples) by going to the [releases section](https://github.com/Pixate/pixate-freestyle-ios/releases) of this repo.
+The easiest is to [download the installer](http://www.freestyle.org/downloads/freestyle/PixateFreestyle-2.1.4.pkg), which always contains the latest  version, and drag **PixateFreestyle.framework** into your Xcode project. Alternatively, you can download the framework file only (i.e. no samples) by going to the [releases section](https://github.com/Pixate/pixate-freestyle-ios/releases) of this repo.
 
 *NOTE: The installer will place the files into your **Documents** folder in a folder named **PixateFreestyle***. 
 
@@ -102,7 +102,7 @@ You can build the style of your app piece-by-piece using the method above. For e
 
 ## Mailing List & Twitter
 
-Keep up with notifications and announcements by joining Pixate's [mailing list](http://pixatesurvey.herokuapp.com) and [follow us](http://twitter.com/Pixate) on Twitter.
+Keep up with notifications and announcements by joining Pixate's [mailing list](http://pixatesurvey.herokuapp.com) and [follow us](http://twitter.com/PixateFreestyle) on Twitter.
 
 ## Docs
 
@@ -118,11 +118,11 @@ Pixate welcomes contributions to our product. Just fork, make your changes, and 
 
 To contribute on behalf of yourself, sign the individual CLA here:
 
- [http://www.pixate.com/cla-individual.html](http://www.pixate.com/cla-individual.html)
+ [http://www.freestyle.org/cla-individual.html](http://www.freestyle.org/cla-individual.html)
 
 To contribute on behalf of your employer, sign the company CLA here:
 
- [http://www.pixate.com/cla-company.html](http://www.pixate.com/cla-company.html)
+ [http://www.freestyle.org/cla-company.html](http://www.freestyle.org/cla-company.html)
 
 All contributions:
 
@@ -133,7 +133,7 @@ More information on the Apache License can be found here: [http://www.apache.org
 
 ## Support
 
-Pixate offers various levels of free and paid support. Please visit our [support site](http://www.pixate.com/support.html) for more details.
+Pixate offers various levels of free and paid support. Please visit our [support site](http://www.freestyle.org/support.html) for more details.
 
 ## License
 

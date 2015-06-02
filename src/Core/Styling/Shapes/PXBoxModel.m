@@ -40,6 +40,8 @@
 
 @synthesize bounds = _bounds;
 
+@dynamic padding;
+
 #pragma mark - Initializers
 
 - (id)init

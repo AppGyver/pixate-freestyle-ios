@@ -52,8 +52,11 @@ static const char PX_DATASOURCE_PROXY; // the proxy for the old datasource
 
 @implementation UICollectionView (PXFreestyle)
 
-+ (void)load
++ (void)initialize
 {
+    if (self != UICollectionView.class)
+        return;
+    
     [self swizzleMethod:@selector(setDelegate:) withMethod:@selector(px_setDelegate:)];
     [self swizzleMethod:@selector(setDataSource:) withMethod:@selector(px_setDataSource:)];
 
@@ -80,6 +83,8 @@ static const char PX_DATASOURCE_PROXY; // the proxy for the old datasource
     if(dataSource)
     {
         id datasourceProxy = [self pxDatasourceProxy];
+        if ([datasourceProxy baseObject])
+            [self px_setDataSource:nil];
         [datasourceProxy setBaseObject:dataSource];
         [self px_setDataSource:datasourceProxy];
     }
@@ -144,8 +149,11 @@ static const char PX_DATASOURCE_PROXY; // the proxy for the old datasource
 
 #pragma mark - Static load
 
-+ (void)load
++ (void)initialize
 {
+    if (self != PXUICollectionView.class)
+        return;
+    
     [UIView registerDynamicSubclass:self withElementName:@"collection-view"];
 }
 
